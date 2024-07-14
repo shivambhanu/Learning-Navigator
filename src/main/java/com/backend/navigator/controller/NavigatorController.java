@@ -103,8 +103,8 @@ public class NavigatorController {
     }
 
     @PutMapping("/exams/{examId}")
-    public ResponseEntity<Exam> updateExam(@PathVariable Long examId, @RequestBody Exam exam){
-        return new ResponseEntity<>(examService.updateExam(examId, exam), HttpStatus.OK);
+    public ResponseEntity<Exam> registerStudentForExam(@PathVariable Long examId, @RequestBody Student student){
+        return new ResponseEntity<>(examService.registerStudentForExam(examId, student), HttpStatus.OK);
     }
 
     @DeleteMapping("/exams/{examId}")
