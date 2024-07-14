@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -25,6 +26,9 @@ public class NavigatorController {
 
     @Autowired
     private ExamService examService;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
 
     //<============================================= student api's ===============================================>
@@ -111,5 +115,16 @@ public class NavigatorController {
     public ResponseEntity<Void> deleteExam(@PathVariable Long examId){
         examService.deleteExam(examId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+
+
+    //easter egg feature
+    @GetMapping("/hidden-feature/{number}")
+    public ResponseEntity<String> getHiddenFeature(@PathVariable Integer number){
+        String apiUrl = "http://numbersapi.com/" + number + "/";
+        String numberTrivia = restTemplate.getForObject(apiUrl, String.class);
+
+        return new ResponseEntity<>(numberTrivia, HttpStatus.OK);
     }
 }
